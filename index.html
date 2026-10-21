@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0b0d">
+<title>Aromas Art — Catálogo de Perfumes</title>
+<style>
+:root{--bg:#09090b;--card:#151518;--gold:#d9ad5b;--text:#fff;--muted:#aaa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,#292015 0,#09090b 42%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:0 18px}.nav{height:70px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:21px;font-weight:800;letter-spacing:.8px}.brand span{color:var(--gold)}.nav a{color:#ddd;text-decoration:none;font-size:14px}
+.hero{text-align:center;padding:70px 0 45px}.badge{display:inline-block;border:1px solid #6d5731;color:#e8c982;padding:7px 13px;border-radius:999px;font-size:12px;letter-spacing:1.2px;text-transform:uppercase}.hero h1{font-size:clamp(38px,10vw,72px);line-height:.98;margin:22px 0 15px;letter-spacing:-2px}.hero h1 span{color:var(--gold)}.hero p{max-width:620px;margin:auto;color:var(--muted);font-size:16px;line-height:1.65}
+.btn{display:inline-flex;align-items:center;justify-content:center;margin-top:25px;padding:14px 22px;border-radius:14px;background:var(--gold);color:#111;text-decoration:none;font-weight:800;box-shadow:0 10px 30px #0008}
+section{padding:35px 0 70px}.title{text-align:center;margin-bottom:25px}.title h2{margin:0 0 8px;font-size:30px}.title p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1fr;gap:18px}.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1c1b1a,#101012);border:1px solid #2d2922;border-radius:24px;padding:28px;min-height:245px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 15px 45px #0006}.card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-50px;top:-55px;background:#d9ad5b22;filter:blur(2px)}.icon{font-size:45px;margin-bottom:auto}.card h3{font-size:26px;margin:0 0 7px}.card p{color:var(--muted);margin:0;line-height:1.5}.card .btn{margin-top:18px;width:100%;background:#fff}.note{text-align:center;color:#777;font-size:12px;margin-top:22px}
+footer{border-top:1px solid #222;padding:25px 0 35px;text-align:center;color:#777;font-size:13px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}.hero{padding-top:100px}.card{min-height:300px}.card .btn{width:max-content}}
+
+.prices{position:relative;margin-top:18px;padding:16px;border:1px solid #3a3226;border-radius:18px;background:#0d0d0f}
+.price-title{font-size:14px;font-weight:800;color:var(--gold);margin-bottom:10px;text-align:center}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.price-grid div{display:flex;align-items:center;justify-content:space-between;padding:10px 11px;border-radius:12px;background:#19181a;border:1px solid #29262a;font-size:13px}
+.price-grid strong{color:#eee}
+.price-grid span{color:var(--gold);font-weight:800}
+@media(min-width:700px){.price-grid{grid-template-columns:repeat(4,1fr)}}
+
+.account-actions{display:flex;align-items:center;gap:8px}
+.account-btn,.cart-btn{border:1px solid #3a3226;background:#151518;color:#fff;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+.cart-btn{position:relative}.cart-count{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;border-radius:999px;background:var(--gold);color:#111;font-size:11px;margin-left:5px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:1000;padding:18px;overflow:auto}.modal.open{display:flex;align-items:center;justify-content:center}
+.modal-box{width:min(520px,100%);background:#111114;border:1px solid #3a3226;border-radius:24px;padding:24px;box-shadow:0 25px 80px #000}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.modal-head h2{margin:0}.close{border:0;background:transparent;color:#aaa;font-size:26px;cursor:pointer}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}
+.field label{font-size:13px;color:#ccc}.field input,.field select{width:100%;padding:12px;border-radius:12px;border:1px solid #343237;background:#19191d;color:#fff;outline:none}
+.check{display:flex;gap:8px;align-items:center;color:#ccc;font-size:13px}.form-btn{width:100%;border:0;cursor:pointer;margin-top:15px}
+.switch{margin-top:15px;text-align:center;color:#aaa;font-size:13px}.switch button{background:none;border:0;color:var(--gold);cursor:pointer;font-weight:800}
+.user-status{font-size:12px;color:#aaa;text-align:center;margin-top:8px}.cart-list{display:flex;flex-direction:column;gap:10px}
+.cart-item{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px;border:1px solid #2d2922;border-radius:16px;background:#171719}
+.cart-item h4{margin:0 0 5px}.cart-item p{margin:0;color:#aaa;font-size:13px}.cart-controls{display:flex;align-items:center;gap:7px;margin-top:10px}
+.qty{border:1px solid #3a373b;background:#222225;color:#fff;border-radius:8px;width:30px;height:30px;cursor:pointer}.remove{border:0;background:none;color:#d88;cursor:pointer;font-size:12px}
+.cart-total{display:flex;justify-content:space-between;border-top:1px solid #29272a;padding-top:15px;margin-top:15px;font-size:18px;font-weight:800}.empty{text-align:center;color:#888;padding:25px}
+.buy-options{position:relative;margin-top:16px}.buy-options-title{font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px}.size-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.size-btn{border:1px solid #39343a;background:#171719;color:#fff;padding:10px 7px;border-radius:11px;cursor:pointer;font-weight:700;font-size:12px}.size-btn span{display:block;color:var(--gold);margin-top:3px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#f2f2f2;color:#111;padding:12px 18px;border-radius:999px;font-weight:800;z-index:2000;display:none;box-shadow:0 10px 30px #0008}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}.nav{height:auto;padding-top:12px;padding-bottom:12px;gap:10px}.nav a{font-size:12px}.account-actions{flex-wrap:wrap;justify-content:flex-end}.account-btn,.cart-btn{padding:8px 9px}.modal{padding:10px}}
+
+#perfumeModal .modal-box{max-height:90vh;overflow:auto}
+#perfumeModal label{display:block;margin:12px 0 6px;font-weight:700}
+#perfumeModal select,#perfumeModal input{width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:#0f0f12;color:#fff}
+#perfumeModal .btn{width:100%;margin-top:18px}
+.muted{color:#aaa}
+
+
+#perfumeModal .modal-box{max-height:92vh;overflow:auto}
+#perfumeModal label{display:block;margin:12px 0 6px;font-weight:700}
+#perfumeModal select,#perfumeModal input{width:100%;box-sizing:border-box;padding:13px;border-radius:10px;border:1px solid #333;background:#0f0f12;color:#fff;outline:none}
+#perfumeModal input:focus,#perfumeModal select:focus{border-color:var(--gold)}
+#perfumeModal .btn{width:100%;margin-top:18px}
+.muted,.selector-help{color:#aaa}
+.selector-help{font-size:.82rem;line-height:1.4;margin-top:8px}
+.perfume-matches{display:none;margin-top:8px;max-height:220px;overflow:auto;border:1px solid #333;border-radius:10px;background:#101014}
+.perfume-match{display:block;width:100%;text-align:left;padding:11px 13px;border:0;border-bottom:1px solid #29292e;background:transparent;color:#fff;cursor:pointer}
+.perfume-match:last-child{border-bottom:0}
+.perfume-match:hover{background:#1b1b20}
+.catalog-action{text-align:center;margin-top:20px}
+
+</style>
+<style>
+html,body{max-width:100%;overflow-x:hidden}
+button,input,select{font:inherit}
+img{max-width:100%}
+</style>
+</head>
+<body>
+<header class="wrap nav">
+<div class="brand">Aromas <span>Art</span></div>
+<div class="account-actions"><a href="#catalogos">Catálogos</a><a href="#contacto">Contacto</a>
+<button class="account-btn" onclick="openLogin()">👤 Cuenta</button>
+<button class="cart-btn" onclick="openCart()">🛒 Carrito <span class="cart-count" id="cartCount">0</span></button></div>
+</header>
+<main>
+<div class="wrap hero">
+  <div class="badge">Perfumería · Catálogos</div>
+  <h1>Encuentra tu<br><span>aroma ideal.</span></h1>
+  <p>Explora nuestros catálogos de perfumes y descubre opciones para dama y caballero en una experiencia rápida, elegante y optimizada para tu teléfono.</p>
+  <a class="btn" href="#catalogos">Ver catálogos ↓</a>
+</div>
+<section id="catalogos" class="wrap">
+      <div class="title"><h2>Nuestros catálogos</h2>
+      <p>Consulta las categorías y compra directamente desde el selector de perfumes. Los PDF ya no son necesarios para realizar el pedido.</p></div>
+      <div class="grid">
+        <article class="card"><div class="icon">🌸</div><h3>Perfumes Femeninos</h3><p>Fragancias para dama.</p><a class="btn" href="#catalogo-interactivo" onclick="setTimeout(()=>document.querySelector('[data-cat=femenino]').click(),0)">Ver femeninos</a></article>
+        <article class="card"><div class="icon">🖤</div><h3>Perfumes Masculinos</h3><p>Fragancias para caballero.</p><a class="btn" href="#catalogo-interactivo" onclick="setTimeout(()=>document.querySelector('[data-cat=masculino]').click(),0)">Ver masculinos</a></article>
+      </div>
+    </section>
+
+
+<section class="aa-shop wrap" id="catalogo-interactivo">
+  <div class="title">
+    <h2>Elige tu perfume</h2>
+    <p>Busca por nombre, filtra por categoría y selecciona el tamaño. Todos los precios están en pesos dominicanos.</p>
+  </div>
+
+  <div class="aa-toolbar">
+    <input id="aaBuscar" type="search" placeholder="🔎 Buscar perfume por nombre..." autocomplete="off">
+    <div class="aa-filtros" role="group" aria-label="Categoría">
+      <button type="button" class="active" data-cat="todos">Todos</button>
+      <button type="button" data-cat="masculino">Masculinos</button>
+      <button type="button" data-cat="femenino">Femeninos</button>
+    </div>
+  </div>
+
+  <div id="aaGrid" class="aa-grid"></div>
+  <div id="aaVacio" class="aa-vacio" hidden>
+    <h3>No encontramos ese perfume</h3>
+    <p>Prueba con otro nombre o usa el selector manual.</p>
+    <button type="button" id="aaManualDesdeVacio">Abrir selector manual</button>
+  </div>
+
+  <div class="aa-manual-banner">
+    <div>
+      <strong>¿Prefieres elegirlo manualmente?</strong>
+      <small>Selecciona cualquiera de los perfumes de nuestros catálogos.</small>
+    </div>
+    <button type="button" class="btn btn-dark" id="aaManual">🧴 Selector manual</button>
+  </div>
+</section>
+
+<div class="aa-modal" id="aaModal" hidden aria-hidden="true">
+  <div class="aa-modal-card" role="dialog" aria-modal="true" aria-labelledby="aaModalTitle">
+    <button type="button" class="aa-x" id="aaCerrar" aria-label="Cerrar">×</button>
+    <h3 id="aaModalTitle">Seleccionar perfume</h3>
+    <p class="aa-muted">Busca y selecciona el perfume que deseas comprar.</p>
+    <input id="aaManualBuscar" type="search" placeholder="🔎 Escribe el nombre..." autocomplete="off">
+    <label for="aaManualSelect">Perfume</label>
+    <select id="aaManualSelect"></select>
+    <label for="aaManualTamano">Tamaño</label>
+    <select id="aaManualTamano">
+      <option value="15|350">15 ml — RD$350</option>
+      <option value="30|800">30 ml — RD$800</option>
+      <option value="50|1200">50 ml — RD$1,200</option>
+      <option value="100|1700">100 ml — RD$1,700</option>
+    </select>
+    <button type="button" class="btn btn-dark aa-add-manual" id="aaManualAgregar">🛒 Agregar al carrito</button>
+  </div>
+</div>
+
+<style>
+.aa-shop{margin-top:55px}
+.aa-toolbar{display:grid;gap:12px;margin:20px 0}
+#aaBuscar,.aa-modal input,.aa-modal select{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#101014;color:#fff;outline:none;font-size:15px}
+#aaBuscar:focus,.aa-modal input:focus,.aa-modal select:focus{border-color:#d9ad5b}
+.aa-filtros{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.aa-filtros button{flex:1;min-width:105px;border:1px solid #333;background:#111;color:#ddd;border-radius:999px;padding:11px 12px;font-weight:700;cursor:pointer}
+.aa-filtros button.active,.aa-filtros button:hover{background:#d9ad5b;color:#000;border-color:#d9ad5b}
+.aa-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.aa-card{background:#111;border:1px solid #29292e;border-radius:16px;padding:16px;color:#fff}
+.aa-card h3{font-size:17px;line-height:1.3;margin:0 0 6px}
+.aa-card .aa-cat{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:1.5px}
+.aa-card label{display:block;color:#aaa;font-size:12px;margin:13px 0 6px}
+.aa-card select{width:100%;padding:12px;background:#0d0d10;color:#fff;border:1px solid #333;border-radius:10px}
+.aa-price{font-size:23px;font-weight:800;margin:14px 0;color:#fff}
+.aa-price small{font-size:12px;color:#d9ad5b}
+.aa-add{width:100%;padding:13px;border:0;border-radius:10px;background:#d9ad5b;color:#000;font-weight:800;cursor:pointer}
+.aa-add:active,.aa-add-manual:active{transform:scale(.98)}
+.aa-vacio{text-align:center;background:#111;border:1px solid #29292e;border-radius:16px;padding:30px 15px;color:#aaa}
+.aa-vacio h3{color:#fff;margin-top:0}
+.aa-vacio button{padding:12px;border:0;border-radius:10px;background:#d9ad5b;font-weight:800;cursor:pointer}
+.aa-manual-banner{margin-top:18px;padding:16px;border:1px solid #29292e;background:#111;border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:15px;color:#fff}
+.aa-manual-banner small{display:block;color:#999;margin-top:4px}
+.aa-modal{position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:99999;display:flex;align-items:center;justify-content:center;padding:15px}
+.aa-modal-card{position:relative;width:min(600px,100%);max-height:90vh;overflow:auto;background:#151518;border:1px solid #444;border-radius:18px;padding:22px;color:#fff}
+.aa-modal[hidden]{display:none}
+.aa-modal-card h3{margin:0 40px 6px 0}
+.aa-x{position:absolute;right:12px;top:8px;border:0;background:transparent;color:#fff;font-size:30px;cursor:pointer}
+.aa-modal label{display:block;color:#aaa;font-size:12px;margin:14px 0 6px}
+.aa-muted{color:#999;font-size:13px}
+.aa-add-manual{width:100%;margin-top:18px}
+@media(min-width:600px){.aa-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:950px){.aa-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:500px){.aa-manual-banner{flex-direction:column;align-items:stretch}.aa-manual-banner button{width:100%}}
+</style>
+
+<script>
+(function(){
+  const data = {
+    masculino: [
+      "POLO BLUE","POLO RED","360 RED","INVICTUS","PHANTOM","1 MILION","1 MILLION ELIXIR",
+      "1 MILLION PRIVÉ","1 MILLION LUCKY","BLACK XS","BLACK XS L´EXCÉS","INVICTSUS VICTORY",
+      "INVICTUS AQUA","INVICTUS INTENSE","INVICTUS ONIX","NAUTICA VOYAGE","TOY BOY","EXPLORER",
+      "LEGEND","LEGEND NIGHT","SWISS ARMY","EROS","EROS FLAME","EROS ENERGY","DYLAN BLUE",
+      "POUR HOMME","STARWALKER","LACOSTE BLANC","LACOSTE ESSENTIAL","LACOSTE MAGNETIC","SCANDAL",
+      "ULTRA MALE","LE BEAU LP","LE MALE ELIXIR","L´EAU D´ISSEY","L´EAU D´ISSEY SPORT","BOTTLED",
+      "BOTTLED NIGHT","DARK BLUE","ACQUA DI GIO","BOTTLED INLIMITED","ACQUA DI GIO PROFUMO",
+      "POUR HOMME","LIGHT BLUE","STRONGER WITH YOU","K","SWY LEATHER","BAD","FUEL FOR LIFE",
+      "BLEU DE CHANEL","PLUS PLUS","EAU DE CARTIER","DELCRATION","212 HEROES","212 SEXY MEN",
+      "212 MEN","212 VIP MEN","212 VIP BLACK","BB DAZZLING GARDEN","ONE SHOCK FOR HIM","BAD BOY",
+      "MAN IN BLACK","MAN WOOD ESSENCE","AZZARO POUR HOMME","MAN EXTREME","BLUE SEDUCTION",
+      "GOLD EDITION","OUD SAFRON","ROYAL AMBER","AMBER ROUGE","OUD FOR GLORY","OUD SUBLIME",
+      "HONOR & GLORY"
+    ],
+    femenino: [
+      "CHANEL N°5","COCO MADEMOISELLE","CHANCE","CHANCE EAU TENDRE","J'ADORE","MISS DIOR",
+      "DIOR ADDICT","HYPNOTIC POISON","LA VIE EST BELLE","LA VIE EST BELLE INTENSE",
+      "GOOD GIRL","GOOD GIRL BLUSH","GOOD GIRL SUPRÊME","212 VIP ROSÉ","212 VIP","212 SEXY",
+      "212 SCENT","CAROLINA HERRERA","VERY GOOD GIRL","VERY GOOD GIRL GLAM","SI","SI PASSIONE",
+      "MY WAY","MY WAY INTENSE","ACQUA DI GIOIA","LIGHT BLUE","L'INTERDIT","L'INTERDIT ROUGE",
+      "LIBRE","LIBRE INTENSE","MON GUERLAIN","BLACK OPIUM","BLACK OPIUM EXTREME","OLYMPEA",
+      "OLYMPEA INTENSE","FAME","FAME PARFUM","ALIEN","ALIEN GODDESS","TOY 2","TOY 2 BUBBLE GUM",
+      "TOY BOY","PARADOXE","PARADOXE INTENSE","VALENTINO DONNA","VALENTINO BORN IN ROMA",
+      "VALENTINO BORN IN ROMA INTENSE","BURBERRY HER","BURBERRY HER ELIXIR","EROS POUR FEMME",
+      "EROS POUR FEMME EDP","MON PARIS","MON PARIS INTENSEMENT","IDÔLE","IDÔLE INTENSE",
+      "IDÔLE NECTAR","FLOWER BY KENZO","NARCISO RODRIGUEZ","NARCISO POUDRÉE","FOR HER",
+      "212 VIP BLACK ELIXIR","SCANDAL","SCANDAL BY NIGHT","PURE XS FOR HER","FANTASY",
+      "FANTASY INTIMATE","ARIANA GRANDE CLOUD","CLOUD 2.0","MOD VANILLA","YARA","YARA MOI",
+      "YARA TOUS","KHAMRAH","KHAMRAH QAHWA","ANA ABIYEDH","MAYAR","BADE'E AL OUD",
+      "QAA'EDAH","RAGHBA","ECLAIRE"
+    ]
+  };
+
+  const prices = {"15":350,"30":800,"50":1200,"100":1700};
+  const perfumes = [];
+  Object.keys(data).forEach(cat => data[cat].forEach((nombre,i) => {
+    perfumes.push({id:cat+"-"+i,nombre,categoria:cat});
+  }));
+
+  const grid=document.getElementById("aaGrid");
+  const search=document.getElementById("aaBuscar");
+  const empty=document.getElementById("aaVacio");
+  const modal=document.getElementById("aaModal");
+  const manual=document.getElementById("aaManual");
+  const manualEmpty=document.getElementById("aaManualDesdeVacio");
+  const closeBtn=document.getElementById("aaCerrar");
+  const manualSearch=document.getElementById("aaManualBuscar");
+  const manualSelect=document.getElementById("aaManualSelect");
+  const manualSize=document.getElementById("aaManualTamano");
+  const manualAdd=document.getElementById("aaManualAgregar");
+
+  let categoria="todos";
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+  }
+
+  function card(p){
+    return `<article class="aa-card">
+      <div class="aa-cat">${p.categoria}</div>
+      <h3>${esc(p.nombre)}</h3>
+      <label>Tamaño</label>
+      <select class="aa-size" data-id="${p.id}">
+        <option value="15">15 ml — RD$350</option>
+        <option value="30">30 ml — RD$800</option>
+        <option value="50">50 ml — RD$1,200</option>
+        <option value="100">100 ml — RD$1,700</option>
+      </select>
+      <div class="aa-price">RD$350 <small>15 ml</small></div>
+      <button type="button" class="aa-add" data-id="${p.id}">🛒 Agregar al carrito</button>
+    </article>`;
+  }
+
+  function render(){
+    const q=search.value.trim().toLowerCase();
+    const list=perfumes.filter(p=>
+      (categoria==="todos" || p.categoria===categoria) &&
+      (!q || p.nombre.toLowerCase().includes(q))
+    );
+    grid.innerHTML=list.map(card).join("");
+    empty.hidden=list.length>0;
+    grid.querySelectorAll(".aa-size").forEach(sel=>{
+      sel.addEventListener("change",()=>{
+        const price=prices[sel.value];
+        const box=sel.closest(".aa-card").querySelector(".aa-price");
+        box.innerHTML=`RD$${price.toLocaleString("es-DO")} <small>${sel.value} ml</small>`;
+      });
+    });
+    grid.querySelectorAll(".aa-add").forEach(btn=>{
+      btn.addEventListener("click",(e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        const p=perfumes.find(x=>x.id===btn.dataset.id);
+        const sel=btn.closest(".aa-card").querySelector(".aa-size");
+        const ml=sel.value;
+        const price=prices[ml];
+        if(typeof window.addToCart==="function"){
+          window.addToCart(p.nombre,ml+" ml",price);
+        }else{
+          alert("El carrito no está disponible.");
+        }
+      });
+    });
+  }
+
+  function fillManual(q=""){
+    const term=q.trim().toLowerCase();
+    const list=perfumes.filter(p=>!term || p.nombre.toLowerCase().includes(term));
+    manualSelect.innerHTML=list.map(p=>`<option value="${p.id}">${p.categoria==="masculino"?"👨":"👩"} ${esc(p.nombre)}</option>`).join("");
+    if(!list.length) manualSelect.innerHTML="<option value=''>No encontrado</option>";
+  }
+
+  function open(){
+    modal.hidden=false;
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    manualSearch.value="";
+    fillManual();
+    manualSize.value="15|350";
+    setTimeout(()=>manualSearch.focus(),30);
+  }
+
+  function close(){
+    modal.hidden=true;
+    modal.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+
+  manual.addEventListener("click",open);
+  manualEmpty.addEventListener("click",open);
+  closeBtn.addEventListener("click",close);
+  modal.addEventListener("click",e=>{if(e.target===modal)close();});
+  manualSearch.addEventListener("input",()=>fillManual(manualSearch.value));
+
+  // Corrección: el botón siempre funciona, agrega al carrito y cierra el selector.
+  manualAdd.addEventListener("click",function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    const p=perfumes.find(x=>x.id===manualSelect.value);
+    if(!p){
+      alert("Selecciona un perfume.");
+      return;
+    }
+    const [ml,price]=manualSize.value.split("|");
+    if(typeof window.addToCart!=="function"){
+      alert("El carrito no está disponible.");
+      return;
+    }
+    try{
+      window.addToCart(p.nombre,ml+" ml",Number(price));
+      close();
+    }catch(err){
+      console.error(err);
+      alert("No se pudo agregar el perfume al carrito.");
+    }
+  });
+
+  document.querySelectorAll(".aa-filtros button").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".aa-filtros button").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      categoria=btn.dataset.cat;
+      render();
+    });
+  });
+  search.addEventListener("input",render);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden)close();});
+
+  render();
+})();
+</script>
+
+<section class="wrap" id="contacto">
+  <div class="title">
+    <h2>Visítanos o escríbenos</h2>
+    <p>Estamos disponibles para atenderte.</p>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <div class="icon">📍</div>
+      <h3>Dirección</h3>
+      <p>La Aviación</p>
+    </article>
+    <article class="card">
+      <div class="icon">💬</div>
+      <h3>WhatsApp</h3>
+      <p>849 428 2672</p>
+      <a class="btn" href="https://wa.me/18494282672" target="_blank" rel="noopener noreferrer">Escribir por WhatsApp</a>
+    </article>
+  </div>
+  <div class="title" style="margin-top:35px;margin-bottom:0">
+    <h2>Horario</h2>
+    <p>Lunes a viernes · 8:00 AM a 10:00 PM</p>
+  </div>
+</section>
+
+
+<div class="modal" id="loginModal" onclick="if(event.target.id==='loginModal')closeModal('loginModal')"><div class="modal-box">
+<div class="modal-head"><h2 id="authTitle">Iniciar sesión</h2><button class="close" onclick="closeModal('loginModal')">×</button></div>
+<form id="loginForm">
+<div class="field"><label>Correo electrónico</label><input id="loginEmail" type="email" required></div>
+<div class="field" style="margin-top:12px"><label>Contraseña</label><input id="loginPassword" type="password" required></div>
+<label class="check" style="margin-top:12px"><input id="rememberLogin" type="checkbox"> Recordar contraseña</label>
+<button class="btn form-btn" type="submit">Entrar</button></form>
+<form id="registerForm" style="display:none"><div class="form-grid">
+<div class="field"><label>Nombre</label><input id="regName" required></div><div class="field"><label>Apellido</label><input id="regLast" required></div>
+<div class="field"><label>Edad</label><input id="regAge" type="number" min="13" max="120" required></div>
+<div class="field"><label>Sexo</label><select id="regSex" required><option value="">Seleccionar</option><option>Femenino</option><option>Masculino</option><option>Otro</option><option>Prefiero no decirlo</option></select></div>
+<div class="field full"><label>Teléfono</label><input id="regPhone" type="tel" required></div>
+<div class="field full"><label>Correo electrónico</label><input id="regEmail" type="email" required></div>
+<div class="field"><label>Contraseña</label><input id="regPassword" type="password" minlength="6" required></div>
+<div class="field"><label>Confirmar contraseña</label><input id="regPassword2" type="password" minlength="6" required></div>
+</div><label class="check" style="margin-top:12px"><input id="rememberReg" type="checkbox"> Recordar contraseña</label>
+<button class="btn form-btn" type="submit">Crear cuenta</button></form>
+<div class="switch" id="authSwitch">¿No tienes cuenta? <button onclick="showRegister()">Crear cuenta</button></div>
+<div class="user-status" id="userStatus"></div></div></div>
+
+<div class="modal" id="cartModal" onclick="if(event.target.id==='cartModal')closeModal('cartModal')"><div class="modal-box">
+<div class="modal-head"><h2>🛒 Mi carrito</h2><button class="close" onclick="closeModal('cartModal')">×</button></div>
+<div id="cartList"></div><div id="cartSummary"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+let cart=JSON.parse(localStorage.getItem('aromasart_cart')||'[]');
+let users=JSON.parse(localStorage.getItem('aromasart_users')||'[]');
+let currentUser=JSON.parse(localStorage.getItem('aromasart_current_user')||'null');
+function saveCart(){localStorage.setItem('aromasart_cart',JSON.stringify(cart));updateCartCount()}
+function updateCartCount(){document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0)}
+function toast(m){let e=document.getElementById('toast');e.textContent=m;e.style.display='block';clearTimeout(window.t);window.t=setTimeout(()=>e.style.display='none',1800)}
+function addToCart(name,size,price){let k=name+'|'+size,i=cart.find(x=>x.key===k);i?i.qty++:cart.push({key:k,name,size,price,qty:1});saveCart();toast('Agregado al carrito')}
+function openCart(){renderCart();document.getElementById('cartModal').classList.add('open')}
+function renderCart(){let l=document.getElementById('cartList'),s=document.getElementById('cartSummary');if(!cart.length){l.innerHTML='<div class="empty">Tu carrito está vacío.</div>';s.innerHTML='';return}
+l.innerHTML=cart.map((i,n)=>`<div class="cart-item"><div><h4>${esc(i.name)}</h4><p>${i.size} · RD$${i.price.toLocaleString('es-DO')}</p><div class="cart-controls"><button class="qty" onclick="qty(${n},-1)">−</button><strong>${i.qty}</strong><button class="qty" onclick="qty(${n},1)">+</button><button class="remove" onclick="removeItem(${n})">Eliminar</button></div></div><strong>RD$${(i.price*i.qty).toLocaleString('es-DO')}</strong></div>`).join('');
+let total=cart.reduce((a,i)=>a+i.price*i.qty,0);s.innerHTML=`<div class="cart-total"><span>Total</span><span>RD$${total.toLocaleString('es-DO')}</span></div><button class="btn form-btn" onclick="checkout()">Finalizar compra por WhatsApp</button>`}
+function qty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart();renderCart()}
+function removeItem(i){cart.splice(i,1);saveCart();renderCart()}
+function checkout(){if(!cart.length)return;if(!currentUser){closeModal('cartModal');openLogin();toast('Inicia sesión para finalizar');return}
+let total=cart.reduce((a,i)=>a+i.price*i.qty,0),lines=cart.map(i=>`• ${i.name} — ${i.size} x${i.qty} = RD$${i.price*i.qty}`).join('\\n');
+let msg=`Hola Aromas Art, quiero realizar este pedido:\\n\\n${lines}\\n\\nTotal: RD$${total}\\n\\nCliente: ${currentUser.name} ${currentUser.last}\\nTeléfono: ${currentUser.phone}\\nCorreo: ${currentUser.email}`;
+window.open('https://wa.me/18494282672?text='+encodeURIComponent(msg),'_blank')}
+function openLogin(){showLogin();document.getElementById('loginModal').classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function showLogin(){document.getElementById('authTitle').textContent='Iniciar sesión';document.getElementById('loginForm').style.display='block';document.getElementById('registerForm').style.display='none';document.getElementById('authSwitch').innerHTML='¿No tienes cuenta? <button onclick="showRegister()">Crear cuenta</button>'}
+function showRegister(){document.getElementById('authTitle').textContent='Crear cuenta';document.getElementById('loginForm').style.display='none';document.getElementById('registerForm').style.display='block';document.getElementById('authSwitch').innerHTML='¿Ya tienes cuenta? <button onclick="showLogin()">Iniciar sesión</button>'}
+document.getElementById('registerForm').addEventListener('submit',e=>{e.preventDefault();let u={name:regName.value.trim(),last:regLast.value.trim(),age:regAge.value,sex:regSex.value,phone:regPhone.value.trim(),email:regEmail.value.trim().toLowerCase(),password:regPassword.value};if(u.password!==regPassword2.value)return toast('Las contraseñas no coinciden');if(users.some(x=>x.email===u.email))return toast('Ese correo ya está registrado');users.push(u);localStorage.setItem('aromasart_users',JSON.stringify(users));currentUser={...u};delete currentUser.password;localStorage.setItem('aromasart_current_user',JSON.stringify(currentUser));if(rememberReg.checked)localStorage.setItem('aromasart_remember_email',u.email);toast('Cuenta creada');setTimeout(()=>closeModal('loginModal'),700)})
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();let email=loginEmail.value.trim().toLowerCase(),p=loginPassword.value,u=users.find(x=>x.email===email&&x.password===p);if(!u)return toast('Correo o contraseña incorrectos');currentUser={...u};delete currentUser.password;localStorage.setItem('aromasart_current_user',JSON.stringify(currentUser));if(rememberLogin.checked)localStorage.setItem('aromasart_remember_email',email);toast('Sesión iniciada');setTimeout(()=>closeModal('loginModal'),700)})
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]) )}
+let rem=localStorage.getItem('aromasart_remember_email');if(rem)loginEmail.value=rem;updateCartCount();
+
+function openPerfumeSelector(){
+  document.getElementById('perfumeModal').classList.add('open');
+  document.getElementById('perfumeSearch').value='';
+  document.getElementById('perfumeManual').value='';
+  document.getElementById('perfumeMatches').innerHTML='';
+  document.getElementById('perfumeMatches').style.display='none';
+  document.getElementById('perfumeSize').value='15 ml';
+  setTimeout(()=>document.getElementById('perfumeSearch').focus(),100);
+}
+function closePerfumeSelector(){
+  document.getElementById('perfumeModal').classList.remove('open');
+}
+function filterPerfumeName(){
+  const q=document.getElementById('perfumeSearch').value.trim().toLowerCase();
+  const dl=document.getElementById('perfumeNames');
+  const matches=[...dl.querySelectorAll('option')].filter(o=>o.value.toLowerCase().includes(q)).slice(0,12);
+  const box=document.getElementById('perfumeMatches');
+  if(!q || !matches.length){
+    box.style.display='none';
+    box.innerHTML='';
+    return;
+  }
+  box.innerHTML=matches.map(o=>`<button type="button" class="perfume-match" onclick="selectPerfumeName(${JSON.stringify(o.value)})">${o.value}</button>`).join('');
+  box.style.display='block';
+}
+function selectPerfumeName(name){
+  document.getElementById('perfumeSearch').value=name;
+  document.getElementById('perfumeManual').value=name;
+  document.getElementById('perfumeMatches').style.display='none';
+}
+function addSelectedPerfume(){
+  const searchName=document.getElementById('perfumeSearch').value.trim();
+  const manualName=document.getElementById('perfumeManual').value.trim();
+  const name=manualName || searchName;
+  if(!name){
+    toast('Escribe o selecciona el nombre del perfume');
+    document.getElementById('perfumeSearch').focus();
+    return;
+  }
+  const sizeEl=document.getElementById('perfumeSize');
+  const size=sizeEl.value;
+  const price=Number(sizeEl.options[sizeEl.selectedIndex].dataset.price);
+  addToCart(name,size,price);
+  closePerfumeSelector();
+}
+
+</script>
+</main>
+<footer>Aromas Art · Todos los derechos reservados</footer>
+</body>
+</html>
